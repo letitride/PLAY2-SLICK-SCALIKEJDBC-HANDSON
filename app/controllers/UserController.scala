@@ -27,15 +27,16 @@ class UserController @Inject()(components: MessagesControllerComponents)
 
   private val c = Companies.syntax("c")
 
-  def list = Action{ implicit request => {
+  def list = Action{ implicit request =>
     val u = Users.syntax("u")
 
-      DB.readOnly { implicit session => {
-        val users = withSQL {
-            select.from(Users as u).orderBy(u.id.asc)
-          }.map(Users(u.resultName)).list().apply()
-          Ok(views.html.user.list(users))
-      }}
+    DB.readOnly { implicit session =>
+      val users = withSQL {
+        select.from(Users as u).leftJoin(Companies as c).on(u.companyId, c.id).orderBy(u.id.asc)
+      }.map{ rs =>
+        (Users(u)(rs), rs.intOpt(c.resultName.id).map(_ => Companies(c)(rs)))
+      }.list().apply()
+      Ok(views.html.user.list(users))
     }
   }
 
