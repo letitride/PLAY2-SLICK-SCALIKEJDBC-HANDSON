@@ -15,8 +15,11 @@ libraryDependencies ++= Seq(
   "org.scalikejdbc" %% "scalikejdbc-config" % "3.4.0",
   "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.8.0-scalikejdbc-3.4"
 )
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc-test" % "3.4.0" % Test
 
 enablePlugins(ScalikejdbcPlugin)
+
+javaOptions in Test += "-Dconfig.file=conf/test.conf"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.example.controllers._"
