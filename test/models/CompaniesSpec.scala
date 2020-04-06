@@ -4,7 +4,6 @@ import org.scalatest._
 import scalikejdbc.scalatest.AutoRollback
 import scalikejdbc._
 
-
 class CompaniesSpec extends fixture.FlatSpec with Matchers with AutoRollback {
   val c = Companies.syntax("c")
 
