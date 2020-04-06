@@ -15,7 +15,7 @@ class CompaniesSpec extends fixture.FlatSpec with Matchers with AutoRollback {
   val c = Companies.syntax("c")
 
   behavior of "Companies"
-  
+
   it should "find by primary keys" in { implicit session =>
     val maybeFound = Companies.find(123)
     maybeFound.isDefined should be(true)
